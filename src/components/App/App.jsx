@@ -5,7 +5,7 @@ import ContactList from '../ContactList/ContactList';
 import Filter from '../Filter/Filter';
 
 import { MainConteiner } from './App.styled';
-import { addContact, setFilter, deleteContact } from '../../store/contactsSlice'; // Импортируйте действия из contactsSlice
+import { addContact, setFilter, deleteContact } from '../../redux/contactsSlice'; // Импортируйте действия из contactsSlice
 
 export function App() {
   const contacts = useSelector((state) => state.contacts);
