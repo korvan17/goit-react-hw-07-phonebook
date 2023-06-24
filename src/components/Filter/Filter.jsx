@@ -1,7 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default function Filter({ onChange }) {
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filterSlice';
+
+export default function Filter() {
+  const dispatch = useDispatch();
+
+  function onChange(e) {
+    dispatch(setFilter(e.target.value));
+  }
+
   return (
     <>
       <h4>Find contacts by name</h4>
@@ -9,7 +17,3 @@ export default function Filter({ onChange }) {
     </>
   );
 }
-
-Filter.prototype = {
-  findChange: PropTypes.func.isRequired,
-};

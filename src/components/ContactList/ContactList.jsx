@@ -1,41 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useGetContactsQuery } from 'redux/phoneBookSlice';
+import { ClipLoader } from 'react-spinners';
+import { getStatusFilter } from 'redux/filterSlice';
+import { useSelector } from 'react-redux';
+import Contact from 'components/Contact/Contakt';
 
-export default function ContactList({ contacts, onDelete }) {
+export default function ContactList() {
+  const { data, isFetching } = useGetContactsQuery();
+  const statusFilter = useSelector(getStatusFilter);
 
-  function clickDelete(id) {
-    onDelete(id);
-  };
-    return (
-      <ul>
-        {contacts.map(val => (
-          <li className="item" key={val.id}>
-            <p>
-              {val.name} {val.number}
-            </p>
-            {val.name !== 'no matches found' && (
-              <button
-                className="button"
-                type="button"
-                onClick={() => clickDelete(val.id)}
-              >
-                Delete
-              </button>
-            )}
-          </li>
-        ))}
-      </ul>
-    );
-
+  return (
+    <>
+      {isFetching && (
+        <ClipLoader
+          color="#000000b9"
+          loading={true}
+          size={15}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      )}
+      {data && (
+        <ul>
+          {data
+            .filter(contact =>
+              contact.name.toLowerCase().includes(statusFilter.toLowerCase())
+            )
+            .map(contact => (
+              <Contact Contact={contact} key={contact.id} />
+            ))}
+        </ul>
+      )}
+    </>
+  );
 }
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-};

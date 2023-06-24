@@ -10,8 +10,7 @@ export const MainConteiner = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding-left: 20px;
-    width: 150px;
+    width: 185px;
   }
 
   .item {
